@@ -27,7 +27,7 @@
 - When the schematic is complete, create and save the netlist. Then simulate.
 - NGSPICE terminal will open (if not configure it again).
 
-![NMOS Schematic](https://github.com/Samrat-03/CMOS-Inverter/Images/nmos_schematic.png?raw=true)
+![NMOS Schematic](/Images/nmos_schematic.png)
 
 ### Id v/s Vds Characteristics
 - In DC sweep, we write value as .dc VCC 0 1.8 1m Vin 0 2.2 0.2
@@ -35,7 +35,7 @@
 - Vin (Vgs) takes value from 0 to 2.2 with the gap of 0.2.
 - NGSPICE command to plot this graph is plot -vcc#graph.
 
-![Id v/s Vds](https://github.com/Samrat-03/CMOS-Inverter/Images/id_vds.png?raw=true)
+![Id v/s Vds](/Images/id_vds.png)
 
 ### Id v/s Vgs Characteristics
 - In DC sweep, we write value as .dc Vin 0 2.2 1m VCC 0.3 1.8 0.3
@@ -43,8 +43,34 @@
 - Vin (Vgs) takes value from 0.3 to 1.8 with the gap of 0.3.
 - NGSPICE command to plot this graph is plot -vcc#graph.
 
-![Id v/s Vgs](https://github.com/Samrat-03/CMOS-Inverter/Images/id_vgs.png?raw=true)
+![Id v/s Vgs](/Images/id_vgs.png)
 
-### Input Output Characteritics
+### Input Output Characteritics (NMOS)
+- Now we will apply a pulse as input signal and plot the input output characteristics. 
+- In this plot we see, when the input is LOW (0), output is HIGH (1). But when the input is HIGH (1), the output is not LOW (0). 
+- NMOS is strong 0, weak 1. Weak 1 means it can't charge a capacitor fully. It can discharge fully.
+
+![Vout v/s Vin (NMOS)](/Images/vout_vin_nmos.png)
+
+### Input Output Characteristics (PMOS)
+- Now we will apply a pulse as input signal and plot the input output characteristics. 
+- In this plot we see, when the input is LOW (0), output is not HIGH (1). But when the input is HIGH (1), the output is LOW (0). 
+- PMOS is strong 1, weak 0. Strong 1 means it can charge a capacitor fully. It can't discharge fully.
+
+![Vout v/s Vin (PMOS)](/Images/vout_vin_pmos.png)
+
+
+## CMOS
+- For an inverter, we can't use NMOS or PMOS. But we can use a combination of them. NMOS can discharge a capacitor fully, while PMOS can charge a capacitor fully. Series of both of them will create an inverter for us, which can do both charge as well as discharge.
+- PMOS is a pull up network, whereas NMOS is a pull down network.
+- The following is the schematic of a CMOS Inverter.
+
+![CMOS Inverter Schematic](/Images/cmos.png)
+
+### Voltage Transfer Characteristics
+- DC sweep is used to plot VTC. Vin is varied from 0 to 2.2V with gap of 1mV.
+
+![Voltage Transfer Characteristics](/Images/vtc.png)
+
 
 
