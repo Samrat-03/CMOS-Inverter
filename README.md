@@ -1,5 +1,5 @@
 # CMOS Inverter
--In this project we will study characteristics of a CMOS Inverter.
+In this project we will study characteristics of a CMOS Inverter.
 
 ## Tools Used
 - XSCHEM
@@ -63,14 +63,39 @@
 ## CMOS
 - For an inverter, we can't use NMOS or PMOS. But we can use a combination of them. NMOS can discharge a capacitor fully, while PMOS can charge a capacitor fully. Series of both of them will create an inverter for us, which can do both charge as well as discharge.
 - PMOS is a pull up network, whereas NMOS is a pull down network.
+- The W/L ratio of PMOS is 2.5 greater than the W/L ratio of NMOS. This is because when we equate the current equations of NMOS and PMOS, this ratio is equal to the ratio of electron mobility in NMOS and hole mobility in PMOS, which is around 2.5~3.
 - The following is the schematic of a CMOS Inverter.
 
 ![CMOS Inverter Schematic](/Images/cmos.png)
 
 ### Voltage Transfer Characteristics
 - DC sweep is used to plot VTC. Vin is varied from 0 to 2.2V with gap of 1mV.
+- The point where Vin and Vout meet is called switching threshold point, Vm. In ideal cases it for the CMOS to be symmetric, it should be exactly at the middle (Vdd/2). For our case, it should be 0.9V. 
+- Initially the W/L ratios are same in the simulation (1/0.15). But when we plot the VTC, we observe that Vm is 0.838V, which is less than 0.9V. To increase this either we can increase width of PMOS or decrease that of NMOS. Also, we have to keep the W/L ratios of PMOS to NMOS as 2.5. So, I have taken width of NMOS as 0.4 and width of PMOS as 1. By this, we get the value of Vm as 0.882V which is better than the previous case.
+- To calculate Vm, we use the command: meas dc vm when vin=vout in ngspice terminal.
 
 ![Voltage Transfer Characteristics](/Images/vtc.png)
 
+Now we calculate other parameters of CMOS: VOH, VOL, VIH, VIL
+- VOH - Maximum output voltage when it is logic '1'.
+- VOL - Minimun output voltage when it is logic '0'.
+- VIH - Minimum input voltage that can be interpreted as logic '1' input.
+- VIL - Maximum input voltage that can be interpreted as logic '0' input.
+- VOH = 1.8V and VOL = 0V clearly.
+- VIH and VIL are calculated at those points in the VTC where the gain is -1. Derivative of Vout should be -1.
+- We define a variable gain = (abs(deriv(vout)) >= 1)*1.8
+- Then we plot both gain and vout in same plot. The points where these two plots intersect are VIL and VIH.
+- Command to find those points is: meas VIL dc find vin when gain=1 cross=1
+			        meas VIH dc find vin when gain=1 cross=last
+		
+![VIL and VIH](/Images/vil_vih.png)
 
+So, the calculated parameters are:
+- VOH = 1.8V
+- VOL = 0V
+- VIL = 0.7475V
+- VIH = 1.0044V
+Noise Margin Formula
+NML(Noise Margin for Low) - VIL - VOL = 0.7475 V
+NMH(Noise Margin for HIGH) - VOH - VIH = 0.7956 V
 
