@@ -99,3 +99,17 @@ Noise Margin Formula
 NML(Noise Margin for Low) - VIL - VOL = 0.7475 V
 NMH(Noise Margin for HIGH) - VOH - VIH = 0.7956 V
 
+### Delay Analysis
+- The propagation delay of a CMOS is time taken from 50% of input to 50% of output. This can be calculated in two cases: tpHL and tpLH. The final propagation delay will be the average of these two times.
+- Another parameter is the rise time and fall time. Rise time is the time from 10% of output to 90% of output.
+
+![Delay](/Images/delay.png)
+
+- We will calculate these parameters by doing the transient analysis of the CMOS inverter.
+- For transient analysis we use - .tran .02n 10n in the code shown option. For Vin, we will take a pulse. It is generated using - pulse(0 1.8 0 .3n .3n 3n 6.6n).
+
+![Transient Analysis](/Images/tran.png)
+
+- From the transient analysis, we found that the propagation delay of the CMOS inverter is 29.14ps. The rise time is 56.14ps and the fall time is 46.2ps.
+
+
