@@ -99,7 +99,7 @@ Noise Margin Formula
 NML(Noise Margin for Low) - VIL - VOL = 0.7475 V
 NMH(Noise Margin for HIGH) - VOH - VIH = 0.7956 V
 
-### Delay Analysis
+### Transient Analysis
 - The propagation delay of a CMOS is time taken from 50% of input to 50% of output. This can be calculated in two cases: tpHL and tpLH. The final propagation delay will be the average of these two times.
 - Another parameter is the rise time and fall time. Rise time is the time from 10% of output to 90% of output.
 
@@ -112,4 +112,16 @@ NMH(Noise Margin for HIGH) - VOH - VIH = 0.7956 V
 
 - From the transient analysis, we found that the propagation delay of the CMOS inverter is 29.14ps. The rise time is 56.14ps and the fall time is 46.2ps.
 
+- The rise and fall time we calculated is for no load condition. If we attach a load capacitance to the output of the inverter, the rise and fall time will drastically increase because the capacitor will take time to charge and discharge.
+- To decrease the rise and fall time when the load is connected, we can use two ways:
+1. Increase clock period or decrease clock frequency.
+2. Increase the width of NMOS & PMOS.
+
+![CMOS Inverter with Load (Vout & Ids*1000 graph)](/Images/with_load.png)
+
+### Power Analysis
+- To calculate the power consumption for one cycle, we need to integrate VxI for one cycle.
+- As V is constant (1.8V), we just need to integrate current in one cycle. We do this by the command: meas trans curr_int integ vcc#branch from=20n to=60n.
+- The power consumption of the CMOS inverter at 0.5pF load is 1.63pW.
+- The power consumption of a circuit can be reduced by reducing the switching of the output, which means optimized architecture.
 

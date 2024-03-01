@@ -29,8 +29,12 @@ N 440 390 440 430 {
 lab=VCC}
 N 370 390 440 390 {
 lab=VCC}
+N 430 500 480 500 {
+lab=Vout}
+N 430 480 430 500 {
+lab=Vout}
 C {devices/vsource.sym} 440 660 0 0 {name=VCC value=1.8 savecurrent=false}
-C {devices/vsource.sym} 510 660 0 0 {name=Vin value="pulse(0 1.8 0 .3n .3n 3n 6.6n)" savecurrent=false}
+C {devices/vsource.sym} 510 660 0 0 {name=Vin value="pulse(0 1.8 0 .3n .3n 20n 40n)" savecurrent=false}
 C {devices/lab_pin.sym} 440 630 0 0 {name=p1 sig_type=std_logic lab=VCC}
 C {devices/lab_pin.sym} 440 690 0 0 {name=p2 sig_type=std_logic lab=GND}
 C {devices/lab_pin.sym} 510 630 0 0 {name=p3 sig_type=std_logic lab=Vin}
@@ -38,11 +42,11 @@ C {devices/lab_pin.sym} 510 690 0 0 {name=p4 sig_type=std_logic lab=GND
 }
 C {devices/code_shown.sym} 570 430 0 0 {name=s1 only_toplevel=false value=".lib /usr/local/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
 .save all"}
-C {devices/code_shown.sym} 560 520 0 0 {name=s3 only_toplevel=false value=".tran .02n 10n
+C {devices/code_shown.sym} 560 520 0 0 {name=s3 only_toplevel=false value=".tran .02n 80n
 .save all
 .end"}
 C {sky130_fd_pr/nfet_01v8.sym} 350 520 0 0 {name=M1
-W=0.4
+W=0.8
 L=0.15
 nf=1 
 mult=1
@@ -56,7 +60,7 @@ model=nfet_01v8
 spiceprefix=X
 }
 C {sky130_fd_pr/pfet_01v8.sym} 350 430 0 0 {name=M2
-W=1
+W=2
 L=0.15
 nf=1
 mult=1
@@ -73,3 +77,4 @@ C {devices/lab_pin.sym} 370 580 0 0 {name=p5 sig_type=std_logic lab=GND}
 C {devices/lab_pin.sym} 290 470 0 0 {name=p6 sig_type=std_logic lab=Vin}
 C {devices/lab_pin.sym} 430 480 0 1 {name=p7 sig_type=std_logic lab=Vout}
 C {devices/lab_pin.sym} 370 370 0 1 {name=p8 sig_type=std_logic lab=VCC}
+C {devices/parax_cap.sym} 480 510 0 0 {name=C1 gnd=0 value=0.5p m=1}
