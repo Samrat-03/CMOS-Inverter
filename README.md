@@ -125,3 +125,30 @@ NMH(Noise Margin for HIGH) - VOH - VIH = 0.7956 V
 - The power consumption of the CMOS inverter at 0.5pF load is 1.63pW.
 - The power consumption of a circuit can be reduced by reducing the switching of the output, which means optimized architecture.
 
+### Layout Design using MAGIC
+- The first step is to integrate MAGIC to Sky130 by the command: magic  -rcfile /usr/local/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc.
+- This command will open two windows, one is for layout and other one is a terminal.
+- To enable the grid we use the command: grid 50nm 50nm (50nm because channel length of our NMOS and PMOS is 150nm which is multiple of 50nm).
+- Use shift+z to zoom out and ctrl+z to zoom in.
+- To create a box, we need two points: left bottom and right top. Click left button of mouse to select the left bottom corner of box and right button of mouse to select the right top corner of the box. To shift the box in only on the points of the grid use command: snap user 50nm.
+- To check the DRC error use the command: drc find.
+- The wafer given in the layout is p-type by default. To make a PMOS, we have to take n-well.
+- After the well layer, we have a diffusion layer. n diffusion is created in the p-well (or p substrate) and p diffusion in the n well. Diffusion regions are also called the active regions and they form the sources and drains of the transistors.
+- After the diffusion layer, we have our oxide layer (polysilicon).
+- We use a metal layer above regions which we have to connect to other things. For diffusion layers we use LI (local interconnect) metal. The diffusion layer and the LI metal layer are at different stacks according to the layer stack below given by Skywater. To connect these two layers we use VIA. To connect p-diff or n-diff to li layer, we use pdc or ndc respectively.
+
+![Skywater Layer Stack](/Images/layer_stack.png)
+
+- Now, we make our gate for NMOS and PMOS. They will be n-diff and p-diff layers only, but we can't add n-diff and p-diff inside n-well and p-well. So, we use n-tap and p-tap instead. Here also we use a li metal layer above it. To connect it to n-tap and p-tap, we use ntapc and ptapc.
+- We know that gate of PMOS is connected to VCC. So, we make the VCC using metal1 (m1) and connect it to the li metal below using MCON. Similarly we connect GND to gate of NMOS.
+- Connect source terminal of PMOS to VCC using LI metal. 
+- To check whether it is properly connected we can select the VCC and press S on keyboard. Keep pressing S, it will show where is VCC getting shorted in the whole layout. Press , to deselct.
+- Similarly connect GND to source terminal of NMOS. Also, connect drain terminal of both NMOS and PMOS.
+- Now we make VOUT and VIN terminals. VOUT terminal will be a metal1 (m1) layer, which will be connected to the LI using mcon. VIN is connected to polysilicon using polyc and then to LI using mcon.
+
+####Congrats!! Your layout is completed.
+
+![CMOS Inverter Layout](/Images/layout.png)
+
+- Now we extract the layout into a spice file. First use the command: extract all. This will create a .ext file. To convert it to spice file use command: ext2spice file_name.ext.
+

@@ -46,7 +46,7 @@ C {devices/code_shown.sym} 560 520 0 0 {name=s3 only_toplevel=false value=".tran
 .save all
 .end"}
 C {sky130_fd_pr/nfet_01v8.sym} 350 520 0 0 {name=M1
-W=0.8
+W=1
 L=0.15
 nf=1 
 mult=1
