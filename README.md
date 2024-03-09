@@ -6,6 +6,7 @@ In this project we will study characteristics of a CMOS Inverter.
 - NGSPICE
 - MAGIC
 - SKY130
+- NETGEN
 
 ## Installation of Tools
 - CAUTION: Before installing these tools, you should have atleast 50GB free space in your disk.
@@ -18,7 +19,7 @@ In this project we will study characteristics of a CMOS Inverter.
 
 ## NMOS Transistor
 - Create a new folder using mkdir
-- Copy xschemrc file into this folder using the command cp /usr/local/share/pdk/sky130B/libs.tech/xschem/xschemrc .
+- Copy xschemrc file into this folder using the command `cp /usr/local/share/pdk/sky130B/libs.tech/xschem/xschemrc .`
 - Load Xterm and inside that terminal load xschem.
 - Create a new schematic and save it inside the folder.
 - To take components use command shift+i. 
@@ -33,7 +34,7 @@ In this project we will study characteristics of a CMOS Inverter.
 - In DC sweep, we write value as .dc VCC 0 1.8 1m Vin 0 2.2 0.2
 - It means Id will be plotted against VCC (Vds). Value of VCC is in x-axis from 0 to 1.8V with gap of 1mV.
 - Vin (Vgs) takes value from 0 to 2.2 with the gap of 0.2.
-- NGSPICE command to plot this graph is plot -vcc#graph.
+- NGSPICE command to plot this graph is `plot -vcc#graph`.
 
 ![Id v/s Vds](/Images/id_vds.png)
 
@@ -41,7 +42,7 @@ In this project we will study characteristics of a CMOS Inverter.
 - In DC sweep, we write value as .dc Vin 0 2.2 1m VCC 0.3 1.8 0.3
 - It means Id will be plotted against Vin (Vgs). Value of VCC is in x-axis from 0 to 2.2V with gap of 1mV.
 - Vin (Vgs) takes value from 0.3 to 1.8 with the gap of 0.3.
-- NGSPICE command to plot this graph is plot -vcc#graph.
+- NGSPICE command to plot this graph is `plot -vcc#graph`.
 
 ![Id v/s Vgs](/Images/id_vgs.png)
 
@@ -72,7 +73,7 @@ In this project we will study characteristics of a CMOS Inverter.
 - DC sweep is used to plot VTC. Vin is varied from 0 to 2.2V with gap of 1mV.
 - The point where Vin and Vout meet is called switching threshold point, Vm. In ideal cases it for the CMOS to be symmetric, it should be exactly at the middle (Vdd/2). For our case, it should be 0.9V. 
 - Initially the W/L ratios are same in the simulation (1/0.15). But when we plot the VTC, we observe that Vm is 0.838V, which is less than 0.9V. To increase this either we can increase width of PMOS or decrease that of NMOS. Also, we have to keep the W/L ratios of PMOS to NMOS as 2.5. So, I have taken width of NMOS as 0.4 and width of PMOS as 1. By this, we get the value of Vm as 0.882V which is better than the previous case.
-- To calculate Vm, we use the command: meas dc vm when vin=vout in ngspice terminal.
+- To calculate Vm, we use the command: `meas dc vm when vin=vout in ngspice terminal`.
 
 ![Voltage Transfer Characteristics](/Images/vtc.png)
 
@@ -85,8 +86,8 @@ Now we calculate other parameters of CMOS: VOH, VOL, VIH, VIL
 - VIH and VIL are calculated at those points in the VTC where the gain is -1. Derivative of Vout should be -1.
 - We define a variable gain = (abs(deriv(vout)) >= 1)*1.8
 - Then we plot both gain and vout in same plot. The points where these two plots intersect are VIL and VIH.
-- Command to find those points is: meas VIL dc find vin when gain=1 cross=1
-			        meas VIH dc find vin when gain=1 cross=last
+- Command to find those points is: `meas VIL dc find vin when gain=1 cross=1`
+			        `meas VIH dc find vin when gain=1 cross=last`
 		
 ![VIL and VIH](/Images/vil_vih.png)
 
@@ -121,17 +122,17 @@ NMH(Noise Margin for HIGH) - VOH - VIH = 0.7956 V
 
 ### Power Analysis
 - To calculate the power consumption for one cycle, we need to integrate VxI for one cycle.
-- As V is constant (1.8V), we just need to integrate current in one cycle. We do this by the command: meas trans curr_int integ vcc#branch from=20n to=60n.
+- As V is constant (1.8V), we just need to integrate current in one cycle. We do this by the command: `meas trans curr_int integ vcc#branch from=20n to=60n`.
 - The power consumption of the CMOS inverter at 0.5pF load is 1.63pW.
 - The power consumption of a circuit can be reduced by reducing the switching of the output, which means optimized architecture.
 
 ### Layout Design using MAGIC
-- The first step is to integrate MAGIC to Sky130 by the command: magic  -rcfile /usr/local/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc.
+- The first step is to integrate MAGIC to Sky130 by the command: `magic  -rcfile /usr/local/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc`.
 - This command will open two windows, one is for layout and other one is a terminal.
-- To enable the grid we use the command: grid 50nm 50nm (50nm because channel length of our NMOS and PMOS is 150nm which is multiple of 50nm).
+- To enable the grid we use the command: `grid 50nm 50nm` (50nm because channel length of our NMOS and PMOS is 150nm which is multiple of 50nm).
 - Use shift+z to zoom out and ctrl+z to zoom in.
-- To create a box, we need two points: left bottom and right top. Click left button of mouse to select the left bottom corner of box and right button of mouse to select the right top corner of the box. To shift the box in only on the points of the grid use command: snap user 50nm.
-- To check the DRC error use the command: drc find.
+- To create a box, we need two points: left bottom and right top. Click left button of mouse to select the left bottom corner of box and right button of mouse to select the right top corner of the box. To shift the box in only on the points of the grid use command: `snap user 50nm`.
+- To check the DRC error use the command: `drc find`.
 - The wafer given in the layout is p-type by default. To make a PMOS, we have to take n-well.
 - After the well layer, we have a diffusion layer. n diffusion is created in the p-well (or p substrate) and p diffusion in the n well. Diffusion regions are also called the active regions and they form the sources and drains of the transistors.
 - After the diffusion layer, we have our oxide layer (polysilicon).
@@ -142,13 +143,28 @@ NMH(Noise Margin for HIGH) - VOH - VIH = 0.7956 V
 - Now, we make our gate for NMOS and PMOS. They will be n-diff and p-diff layers only, but we can't add n-diff and p-diff inside n-well and p-well. So, we use n-tap and p-tap instead. Here also we use a li metal layer above it. To connect it to n-tap and p-tap, we use ntapc and ptapc.
 - We know that gate of PMOS is connected to VCC. So, we make the VCC using metal1 (m1) and connect it to the li metal below using MCON. Similarly we connect GND to gate of NMOS.
 - Connect source terminal of PMOS to VCC using LI metal. 
-- To check whether it is properly connected we can select the VCC and press S on keyboard. Keep pressing S, it will show where is VCC getting shorted in the whole layout. Press , to deselct.
+- To check whether it is properly connected we can select the VCC and press S on keyboard. Keep pressing S, it will show where is VCC getting shorted in the whole layout. Press , to deselect.
 - Similarly connect GND to source terminal of NMOS. Also, connect drain terminal of both NMOS and PMOS.
 - Now we make VOUT and VIN terminals. VOUT terminal will be a metal1 (m1) layer, which will be connected to the LI using mcon. VIN is connected to polysilicon using polyc and then to LI using mcon.
 
-####Congrats!! Your layout is completed.
+#### Congrats!! Your layout is completed.
 
 ![CMOS Inverter Layout](/Images/layout.png)
 
-- Now we extract the layout into a spice file. First use the command: extract all. This will create a .ext file. To convert it to spice file use command: ext2spice file_name.ext.
+- Now we extract the layout into a spice file. First use the command: `extract all`. This will create a .ext file. To convert it to spice file use command: `ext2spice file_name.ext`.
+
+### LVS (Layout v/s Schematic)
+- Here we compare netlists generated by Xschem and Magic.
+- For this, we need to install a tool called NETGEN. 
+- To install NETGEN, use the following commands
+```
+$  git clone git://opencircuitdesign.com/netgen
+$  cd netgen
+$  ./configure
+$  sudo make
+$  sudo make install 
+```
+
+- To perform the LVS use the commands `lvs file1.spice file2.spice setup.tcl`. Create a setup.tcl file in the same folder where we can give commands which will run during lvs.
+- The output of lvs is a comp.out file, which shows the differences between the two netlists.
 

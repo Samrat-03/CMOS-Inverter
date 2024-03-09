@@ -1,0 +1,6 @@
+* SPICE3 file created from cmos_inv_layout.ext - technology: sky130A
+
+X0 vout vin gnd gnd sky130_fd_pr__nfet_01v8 ad=0.45 pd=2.9 as=0.45 ps=2.9 w=1 l=0.15
+X1 vout vin vcc vcc sky130_fd_pr__pfet_01v8 ad=0.9 pd=4.9 as=0.9 ps=4.9 w=2 l=0.15
+* C0 vcc gnd 2.06755f **FLOATING
+
