@@ -34,7 +34,7 @@ In this project we will study characteristics of a CMOS Inverter.
 - In DC sweep, we write value as .dc VCC 0 1.8 1m Vin 0 2.2 0.2
 - It means Id will be plotted against VCC (Vds). Value of VCC is in x-axis from 0 to 1.8V with gap of 1mV.
 - Vin (Vgs) takes value from 0 to 2.2 with the gap of 0.2.
-- NGSPICE command to plot this graph is `plot -vcc#graph`.
+- NGSPICE command to plot this graph is `plot -vcc#branch`.
 
 ![Id v/s Vds](/Images/id_vds.png)
 
@@ -42,7 +42,7 @@ In this project we will study characteristics of a CMOS Inverter.
 - In DC sweep, we write value as .dc Vin 0 2.2 1m VCC 0.3 1.8 0.3
 - It means Id will be plotted against Vin (Vgs). Value of VCC is in x-axis from 0 to 2.2V with gap of 1mV.
 - Vin (Vgs) takes value from 0.3 to 1.8 with the gap of 0.3.
-- NGSPICE command to plot this graph is `plot -vcc#graph`.
+- NGSPICE command to plot this graph is `plot -vcc#branch`.
 
 ![Id v/s Vgs](/Images/id_vgs.png)
 

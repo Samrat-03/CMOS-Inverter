@@ -12,7 +12,7 @@ lab=GND}
 N 230 220 250 220 {
 lab=GND}
 C {devices/vsource.sym} 200 350 0 0 {name=VCC value=1.8 savecurrent=false}
-C {devices/vsource.sym} 270 350 0 0 {name=Vin value="pulse(0 1.8 1ns 1ns 1ns 5ns 10ns)" savecurrent=false}
+C {devices/vsource.sym} 270 350 0 0 {name=Vin value=0 savecurrent=false}
 C {devices/lab_pin.sym} 200 320 0 0 {name=p1 sig_type=std_logic lab=VCC}
 C {devices/lab_pin.sym} 200 380 0 0 {name=p2 sig_type=std_logic lab=GND}
 C {devices/lab_pin.sym} 270 320 0 0 {name=p3 sig_type=std_logic lab=Vin}
@@ -43,6 +43,6 @@ C {devices/lab_pin.sym} 230 130 0 0 {name=p5 sig_type=std_logic lab=VCC}
 C {devices/lab_pin.sym} 230 190 0 0 {name=p7 sig_type=std_logic lab=Vout}
 C {devices/code_shown.sym} 360 190 0 0 {name=s1 only_toplevel=false value=".lib /usr/local/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
 .save all"}
-C {devices/code_shown.sym} 350 280 0 0 {name=s3 only_toplevel=false value=".tran 0.1n 100n
+C {devices/code_shown.sym} 350 280 0 0 {name=s3 only_toplevel=false value=".dc Vin 0 2.2 1m
 .save all
 .end"}
